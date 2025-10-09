@@ -5,7 +5,6 @@ import { useUserStore } from '@/stores'
 
 import logo from '~/images/logo.svg'
 import logoDark from '~/images/logo-dark.svg'
-import vw from '@/utils/inline-px-to-vw'
 
 const { t } = useI18n()
 const router = useRouter()
