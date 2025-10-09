@@ -11,9 +11,10 @@ import {
 } from '@/api/user'
 
 const InitUserInfo = {
-  uid: 0,
-  nickname: '',
+  id: 0,
+  name: '',
   avatar: '',
+  email: '',
 }
 
 export const useUserStore = defineStore('user', () => {

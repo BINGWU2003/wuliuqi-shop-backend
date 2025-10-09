@@ -33,7 +33,7 @@ router.beforeEach(async (to: EnhancedRouteLocation) => {
   // Set page title
   setPageTitle(to.name)
 
-  if (isLogin() && !userStore.userInfo?.uid)
+  if (isLogin() && !userStore.userInfo?.id)
     await userStore.info()
 })
 
