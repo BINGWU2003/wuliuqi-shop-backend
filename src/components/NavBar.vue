@@ -22,6 +22,9 @@ const title = computed(() => {
  * If route name is in rootRouteList, hide left arrow
  */
 const showLeftArrow = computed(() => {
+  if (route.name === 'Login') {
+    return false
+  }
   if (route.name && rootRouteList.includes(route.name)) {
     return false
   }
