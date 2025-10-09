@@ -12,7 +12,6 @@ const loading = ref(false)
 
 const postData = reactive({
   email: '',
-  code: '',
   nickname: '',
   password: '',
   confirmPassword: '',
@@ -23,9 +22,6 @@ const validatorPassword = (val: string) => val === postData.password
 const rules = reactive({
   email: [
     { required: true, message: t('register.pleaseEnterEmail') },
-  ],
-  code: [
-    { required: true, message: t('register.pleaseEnterCode') },
   ],
   nickname: [
     { required: true, message: t('register.pleaseEnterNickname') },
@@ -54,26 +50,6 @@ async function register() {
     loading.value = false
   }
 }
-
-const isGettingCode = ref(false)
-
-const buttonText = computed(() => {
-  return isGettingCode.value ? t('register.gettingCode') : t('register.getCode')
-})
-
-async function getCode() {
-  if (!postData.email) {
-    showNotify({ type: 'warning', message: t('register.pleaseEnterEmail') })
-    return
-  }
-
-  isGettingCode.value = true
-  const res = await userStore.getCode()
-  if (res.code === 0)
-    showNotify({ type: 'success', message: `${t('register.sendCodeSuccess')}: ${res.result}` })
-
-  isGettingCode.value = false
-}
 </script>
 
 <template>
@@ -86,21 +62,6 @@ async function getCode() {
           name="email"
           :placeholder="$t('register.email')"
         />
-      </div>
-
-      <div class="mt-16 rounded-3xl overflow-hidden">
-        <van-field
-          v-model.trim="postData.code"
-          :rules="rules.code"
-          name="code"
-          :placeholder="$t('register.code')"
-        >
-          <template #button>
-            <van-button size="small" type="primary" plain @click="getCode">
-              {{ buttonText }}
-            </van-button>
-          </template>
-        </van-field>
       </div>
 
       <div class="mt-16 rounded-3xl overflow-hidden">

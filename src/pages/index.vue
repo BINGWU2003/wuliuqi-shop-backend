@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { showToast } from 'vant'
-import { getUserList } from '@/api/user'
+import { getUserInfo } from '@/api/user'
 // 游戏模块配置接口
 interface GameModule {
   id: string
@@ -60,8 +60,8 @@ function handleModuleClick(gameName: string, moduleName: string) {
 }
 
 onMounted(() => {
-  getUserList().then(() => {
-    showToast('服务器连接成功')
+  getUserInfo().then(() => {
+    showToast('获取用户信息成功')
   })
 })
 </script>

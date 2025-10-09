@@ -14,7 +14,7 @@ function Logout() {
   })
     .then(() => {
       userStore.logout()
-      router.push({ name: 'Home' })
+      router.push({ name: 'Login' })
     })
     .catch(() => {})
 }
@@ -23,7 +23,7 @@ function Logout() {
 <template>
   <div class="text-center">
     <VanCellGroup :inset="true">
-      <van-cell v-if="userInfo.uid" :title="$t('settings.logout')" clickable class="van-text-color" @click="Logout" />
+      <van-cell v-if="userInfo.id" :title="$t('settings.logout')" clickable class="van-text-color" @click="Logout" />
     </VanCellGroup>
 
     <div class="text-gray mt-10">

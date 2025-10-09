@@ -7,7 +7,7 @@ import { STORAGE_TOKEN_KEY } from '@/stores/mutation-type'
 // 可以根据自己的需要修改，常见的如 Access-Token，Authorization
 // 需要注意的是，请尽量保证使用中横线`-` 来作为分隔符，
 // 避免被 nginx 等负载均衡器丢弃了自定义的请求头
-export const REQUEST_TOKEN_KEY = 'Access-Token'
+export const REQUEST_TOKEN_KEY = 'Authorization'
 
 // 创建 axios 实例
 const request = axios.create({
@@ -27,20 +27,20 @@ function errorHandler(error: RequestError): Promise<any> {
   if (error.response) {
     const { data = {}, status, statusText } = error.response
     // 403 无权限
-    if (status === 403) {
+    if (status === 400) {
       showNotify({
         type: 'danger',
         message: (data && data.message) || statusText,
       })
     }
     // 401 未登录/未授权
-    if (status === 401 && data.result && data.result.isLogin) {
+    if (status === 401) {
       showNotify({
         type: 'danger',
-        message: 'Authorization verification failed',
+        message: data.message,
       })
       // 如果你需要直接跳转登录页面
-      // location.replace(loginRoutePath)
+      location.replace('/login')
     }
   }
   return Promise.reject(error)

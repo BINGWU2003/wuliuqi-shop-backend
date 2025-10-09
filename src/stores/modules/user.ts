@@ -7,7 +7,6 @@ import {
   getUserInfo,
   resetPassword,
   login as userLogin,
-  logout as userLogout,
   register as userRegister,
 } from '@/api/user'
 
@@ -28,7 +27,7 @@ export const useUserStore = defineStore('user', () => {
   const login = async (loginForm: LoginData) => {
     try {
       const { data } = await userLogin(loginForm)
-      setToken(data.token)
+      setToken(`Bearer ${data.token}`)
     }
     catch (error) {
       clearToken()
@@ -48,13 +47,8 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const logout = async () => {
-    try {
-      await userLogout()
-    }
-    finally {
-      clearToken()
-      setInfo({ ...InitUserInfo })
-    }
+    clearToken()
+    setInfo({ ...InitUserInfo })
   }
 
   const getCode = async () => {

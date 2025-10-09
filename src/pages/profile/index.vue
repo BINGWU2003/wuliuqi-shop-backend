@@ -5,7 +5,7 @@ import defaultAvatar from '@/assets/images/default-avatar.svg'
 
 const userStore = useUserStore()
 const userInfo = computed(() => userStore.userInfo)
-const isLogin = computed(() => !!userInfo.value.uid)
+const isLogin = computed(() => !!userInfo.value.id)
 
 function login() {
   if (isLogin.value)
