@@ -31,6 +31,7 @@ declare module 'vue-router/auto-routes' {
     'ScrollCache': RouteRecordInfo<'ScrollCache', '/scroll-cache', Record<never, never>, Record<never, never>>,
     'Settings': RouteRecordInfo<'Settings', '/settings', Record<never, never>, Record<never, never>>,
     'TagManage': RouteRecordInfo<'TagManage', '/tag-manage', Record<never, never>, Record<never, never>>,
+    '/test-page/': RouteRecordInfo<'/test-page/', '/test-page', Record<never, never>, Record<never, never>>,
     'UnoCSS': RouteRecordInfo<'UnoCSS', '/unocss', Record<never, never>, Record<never, never>>,
   }
 
@@ -95,6 +96,10 @@ declare module 'vue-router/auto-routes' {
     }
     'src/pages/tag-manage/index.vue': {
       routes: 'TagManage'
+      views: never
+    }
+    'src/pages/test-page/index.vue': {
+      routes: '/test-page/'
       views: never
     }
     'src/pages/unocss/index.vue': {
