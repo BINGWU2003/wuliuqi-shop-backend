@@ -20,6 +20,7 @@ declare module 'vue-router/auto-routes' {
   export interface RouteNamedMap {
     'Home': RouteRecordInfo<'Home', '/', Record<never, never>, Record<never, never>>,
     '404': RouteRecordInfo<'404', '/:all(.*)', { all: ParamValue<true> }, { all: ParamValue<false> }>,
+    'BannerManage': RouteRecordInfo<'BannerManage', '/banner-manage', Record<never, never>, Record<never, never>>,
     'Charts': RouteRecordInfo<'Charts', '/charts', Record<never, never>, Record<never, never>>,
     'CodmAccount': RouteRecordInfo<'CodmAccount', '/codm-account', Record<never, never>, Record<never, never>>,
     'CodmAccountOperation': RouteRecordInfo<'CodmAccountOperation', '/codm-account-operation', Record<never, never>, Record<never, never>>,
@@ -57,6 +58,10 @@ declare module 'vue-router/auto-routes' {
     }
     'src/pages/[...all].vue': {
       routes: '404'
+      views: never
+    }
+    'src/pages/banner-manage/index.vue': {
+      routes: 'BannerManage'
       views: never
     }
     'src/pages/charts/index.vue': {

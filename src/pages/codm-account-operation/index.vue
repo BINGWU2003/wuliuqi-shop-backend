@@ -5,7 +5,6 @@ import { closeToast, showLoadingToast, showToast } from 'vant'
 import { createCodmAccount, getCodmAccountDetail, updateCodmAccount } from '@/api/codm-account'
 import { uploadFile } from '@/utils/upload-file'
 import { useAccountOperationStore, useEmailSelectStore } from '@/stores'
-import { debounce } from 'lodash-es'
 
 const route = useRoute()
 const router = useRouter()

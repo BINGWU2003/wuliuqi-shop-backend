@@ -24,7 +24,8 @@
     "CodmAccount": "CODM Account",
     "CodmAccountOperation": "CODM Account Operation",
     "CodmEmailOperation": "CODM Email Operation",
-    "EmailSelect": "Email Select"
+    "EmailSelect": "Email Select",
+    "BannerManage": "Banner Manage"
   },
 
   "tabbar": {

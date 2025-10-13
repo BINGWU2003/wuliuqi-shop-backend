@@ -24,7 +24,8 @@
     "CodmAccount": "CODM账号",
     "CodmAccountOperation": "CODM账号操作",
     "CodmEmailOperation": "CODM邮箱操作",
-    "EmailSelect": "邮箱选择"
+    "EmailSelect": "邮箱选择",
+    "BannerManage": "轮播图管理"
   },
 
   "tabbar": {

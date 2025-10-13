@@ -16,6 +16,19 @@ const router = useRouter()
 // 游戏列表配置
 const games = ref<GameModule[]>([
   {
+    id: 'banner-manage',
+    name: '前台配置',
+    icon: 'i-carbon-settings',
+    color: '#1890ff',
+    modules: [
+      {
+        name: '轮播图管理',
+        icon: 'i-carbon-image',
+        route: '/banner-manage',
+      },
+    ],
+  },
+  {
     id: 'honor-of-kings',
     name: '使命召唤',
     icon: 'i-carbon-game-wireless',
