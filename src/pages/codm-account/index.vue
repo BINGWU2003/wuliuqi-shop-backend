@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onActivated, onMounted, ref } from 'vue'
 import { deleteCodmAccount, getCodmAccountList, patchCodmAccount } from '@/api/codm-account'
 import type { CodmAccount } from '@/api/codm-account'
 import { closeToast, showConfirmDialog, showLoadingToast, showToast } from 'vant'
 import { useRouter } from 'vue-router'
 import ProductCard from '@/components/ProductCard/index.vue'
 import AddButton from '@/components/AddButton/index.vue'
+import { debounce } from 'lodash-es'
 
 interface Product {
   id: number
   name: string
   price: number
   image: string
+  status: number
 }
 
 interface ActionItem {
@@ -19,7 +21,9 @@ interface ActionItem {
   icon: string
   color?: string
 }
-
+defineOptions({
+  name: 'CodmAccount',
+})
 const loading = ref(false)
 const refreshing = ref(false)
 const finished = ref(false)
@@ -30,7 +34,7 @@ const limit = 20
 const searchValue = ref('')
 const activeCategory = ref(0)
 const router = useRouter()
-
+const scrollTop = ref(0)
 // 分类列表
 const categories = ['全部', '上架', '下架']
 
@@ -75,6 +79,7 @@ async function onLoad() {
         name: `[${account.serial_number}]${account.title}`,
         price: account.price,
         image: account.images[0] || '',
+        status: account.status,
       }))
       products.value.push(...newProducts)
       page.value++
@@ -105,21 +110,21 @@ async function onRefresh() {
   }
 }
 
-function onSearch() {
+const onSearch = debounce(() => {
   page.value = 1
   finished.value = false
   accountList.value = []
   products.value = []
   onLoad()
-}
+}, 500)
 
-function onTabChange() {
+const onTabChange = debounce(() => {
   page.value = 1
   finished.value = false
   accountList.value = []
   products.value = []
   onLoad()
-}
+}, 500)
 
 function onAddAccount() {
   router.push('/codm-account-operation')
@@ -230,14 +235,7 @@ async function toggleAccountStatus() {
     closeToast()
     showToast(`${statusText}成功`)
 
-    // 更新本地数据
-    const accountIndex = accountList.value.findIndex(item => item.id === selectedAccount.value!.id)
-    if (accountIndex > -1) {
-      accountList.value[accountIndex].status = newStatus
-    }
-    if (selectedAccount.value) {
-      selectedAccount.value.status = newStatus
-    }
+    await onRefresh()
 
     showActionSheet.value = false
   }
@@ -249,6 +247,12 @@ async function toggleAccountStatus() {
 
 onMounted(() => {
   onLoad()
+})
+onActivated(() => {
+  window.scrollTo(0, scrollTop.value)
+})
+onBeforeRouteLeave(() => {
+  scrollTop.value = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop
 })
 </script>
 
@@ -262,6 +266,7 @@ onMounted(() => {
         shape="round"
         background="transparent"
         @search="onSearch"
+        @update:model-value="onSearch"
       />
     </div>
 
@@ -364,10 +369,10 @@ onMounted(() => {
 </style>
 
 <route lang="json5">
-  {
-    meta: {
-      keepAlive: true
-    },
-    name: 'CodmAccount'
-  }
+{
+  meta: {
+    keepAlive: true
+  },
+  name: 'CodmAccount'
+}
 </route>

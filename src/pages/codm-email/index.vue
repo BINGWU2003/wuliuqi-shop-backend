@@ -5,6 +5,11 @@ import type { CodmEmail } from '@/api/codm-email'
 import { closeToast, showConfirmDialog, showLoadingToast, showToast } from 'vant'
 import { useRouter } from 'vue-router'
 import AddButton from '@/components/AddButton/index.vue'
+import { debounce } from 'lodash-es'
+
+defineOptions({
+  name: 'CodmEmail',
+})
 
 const loading = ref(false)
 const refreshing = ref(false)
@@ -15,7 +20,7 @@ const limit = 20
 const searchKeyword = ref('')
 const activeTab = ref(0)
 const router = useRouter()
-
+const scrollTop = ref(0)
 // ActionSheet 相关
 const showActionSheet = ref(false)
 const selectedEmail = ref<CodmEmail | null>(null)
@@ -62,19 +67,19 @@ async function onRefresh() {
   }
 }
 
-function onSearch() {
+const onSearch = debounce(() => {
   page.value = 1
   finished.value = false
   emailList.value = []
   onLoad()
-}
+}, 500)
 
-function onTabChange() {
+const onTabChange = debounce(() => {
   page.value = 1
   finished.value = false
   emailList.value = []
   onLoad()
-}
+}, 500)
 
 function getBindStatusText(status: number) {
   return status === 1 ? '已绑定' : '未绑定'
@@ -167,6 +172,15 @@ async function deleteEmail(email: CodmEmail) {
 onMounted(() => {
   onLoad()
 })
+onActivated(() => {
+  window.scrollTo(0, scrollTop.value)
+})
+onBeforeRouteLeave(() => {
+  scrollTop.value
+    = window.scrollY
+      || document.documentElement.scrollTop
+      || document.body.scrollTop
+})
 </script>
 
 <template>
@@ -178,6 +192,7 @@ onMounted(() => {
         shape="round"
         background="transparent"
         @search="onSearch"
+        @update:model-value="onSearch"
       />
     </div>
 
@@ -349,9 +364,9 @@ onMounted(() => {
 
 <route lang="json5">
 {
+  name: 'CodmEmail',
   meta: {
     keepAlive: true
   },
-  name: 'CodmEmail'
 }
 </route>

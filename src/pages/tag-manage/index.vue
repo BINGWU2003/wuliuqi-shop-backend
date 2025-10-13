@@ -34,21 +34,19 @@ onMounted(() => {
 
 <template>
   <div class="tag-manage-page">
-    <div class="content">
-      <van-pull-refresh v-model="loading" @refresh="loadCounters">
-        <van-list>
-          <van-cell-group v-if="counterList.length > 0" inset>
-            <van-cell
-              v-for="counter in counterList"
-              :key="counter.id"
-              :title="counter.counter_name"
-              :value="`标签索引：${String(counter.current_value)}`"
-            />
-          </van-cell-group>
-          <van-empty v-else description="暂无数据" />
-        </van-list>
-      </van-pull-refresh>
-    </div>
+    <van-pull-refresh v-model="loading" @refresh="loadCounters">
+      <van-list>
+        <van-cell-group v-if="counterList.length > 0" inset>
+          <van-cell
+            v-for="counter in counterList"
+            :key="counter.id"
+            :title="counter.counter_name"
+            :value="`标签索引：${String(counter.current_value)}`"
+          />
+        </van-cell-group>
+        <van-empty v-else description="暂无数据" />
+      </van-list>
+    </van-pull-refresh>
   </div>
 </template>
 

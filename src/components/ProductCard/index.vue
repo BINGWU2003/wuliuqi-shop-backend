@@ -4,6 +4,7 @@ interface Product {
   name: string
   price: number
   image: string
+  status: number
 }
 
 defineProps<{
@@ -33,9 +34,19 @@ function handleClick(product: Product) {
       <div class="product-name">
         {{ product.name }}
       </div>
-      <div class="product-price">
-        <span class="price-symbol">¥</span>
-        <span class="price-value">{{ product.price }}</span>
+      <div class="product-footer">
+        <div class="product-price">
+          <span class="price-symbol">¥</span>
+          <span class="price-value">{{ product.price }}</span>
+        </div>
+        <!-- 状态标签 -->
+        <div
+          v-if="product.status"
+          class="status-tag"
+          :class="{ 'status-online': product.status === 1, 'status-offline': product.status === 2 }"
+        >
+          {{ product.status === 1 ? '上架' : '下架' }}
+        </div>
       </div>
     </div>
   </div>
@@ -60,6 +71,7 @@ function handleClick(product: Product) {
     aspect-ratio: 1;
     overflow: hidden;
     background: #f7f8fa;
+    position: relative;
 
     :deep(.van-image) {
       width: 100%;
@@ -91,19 +103,47 @@ function handleClick(product: Product) {
       min-height: 40px;
     }
 
-    .product-price {
+    .product-footer {
       display: flex;
-      align-items: baseline;
-      color: #ee0a24;
-      font-weight: bold;
+      align-items: center;
+      justify-content: space-between;
 
-      .price-symbol {
-        font-size: 14px;
-        margin-right: 2px;
+      .product-price {
+        display: flex;
+        align-items: baseline;
+        color: #ee0a24;
+        font-weight: bold;
+
+        .price-symbol {
+          font-size: 14px;
+          margin-right: 2px;
+        }
+
+        .price-value {
+          font-size: 20px;
+        }
       }
 
-      .price-value {
-        font-size: 20px;
+      .status-tag {
+        flex-shrink: 0;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+        line-height: 1;
+        &.status-online {
+          background: #07c160;
+          color: #fff;
+          box-shadow: 0 2px 4px rgba(7, 193, 96, 0.2);
+        }
+
+        &.status-offline {
+          background: #ff976a;
+          color: #fff;
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
       }
     }
   }

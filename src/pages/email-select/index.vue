@@ -5,6 +5,7 @@ import { getCodmEmailList } from '@/api/codm-email'
 import type { CodmEmail } from '@/api/codm-email'
 import { showToast } from 'vant'
 import { useEmailSelectStore } from '@/stores'
+import { debounce } from 'lodash-es'
 
 const router = useRouter()
 const emailSelectStore = useEmailSelectStore()
@@ -43,19 +44,19 @@ async function onLoad() {
   }
 }
 
-function onSearch() {
+const onSearch = debounce(() => {
   page.value = 1
   finished.value = false
   emailList.value = []
   onLoad()
-}
+}, 500)
 
-function onTabChange() {
+const onTabChange = debounce(() => {
   page.value = 1
   finished.value = false
   emailList.value = []
   onLoad()
-}
+}, 500)
 
 function getBindStatusText(status: number) {
   return status === 1 ? '已绑定' : '未绑定'
@@ -80,6 +81,7 @@ function onSelectEmail(email: CodmEmail) {
 
 onMounted(() => {
   onLoad()
+  window.scrollTo(0, 0)
 })
 </script>
 
@@ -92,6 +94,7 @@ onMounted(() => {
         shape="round"
         background="transparent"
         @search="onSearch"
+        @update:model-value="onSearch"
       />
     </div>
 

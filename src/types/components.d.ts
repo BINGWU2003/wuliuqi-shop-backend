@@ -19,8 +19,11 @@ declare module 'vue' {
     VanActionSheet: typeof import('vant/es')['ActionSheet']
     VanBackTop: typeof import('vant/es')['BackTop']
     VanButton: typeof import('vant/es')['Button']
+    VanCard: typeof import('vant/es')['Card']
+    VanCell: typeof import('vant/es')['Cell']
     VanCellGroup: typeof import('vant/es')['CellGroup']
     VanConfigProvider: typeof import('vant/es')['ConfigProvider']
+    VanEmpty: typeof import('vant/es')['Empty']
     VanField: typeof import('vant/es')['Field']
     VanForm: typeof import('vant/es')['Form']
     VanIcon: typeof import('vant/es')['Icon']
@@ -36,6 +39,8 @@ declare module 'vue' {
     VanTabbar: typeof import('vant/es')['Tabbar']
     VanTabbarItem: typeof import('vant/es')['TabbarItem']
     VanTabs: typeof import('vant/es')['Tabs']
+    VanTag: typeof import('vant/es')['Tag']
+    VanTextEllipsis: typeof import('vant/es')['TextEllipsis']
     VanUploader: typeof import('vant/es')['Uploader']
   }
 }
