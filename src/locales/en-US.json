@@ -19,7 +19,11 @@
     "Settings": "⚙️ Settings",
     "404": "⚠️ Page 404",
     "Undefined": "🤷 Undefined title",
-    "TagManage": "🏷️ Tag Manage"
+    "TagManage": "🏷️ Tag Manage",
+    "CodmEmail": "CODM Email",
+    "CodmAccount": "CODM Account",
+    "CodmAccountOperation": "CODM Account Operation",
+    "CodmEmailOperation": "CODM Email Operation"
   },
 
   "tabbar": {

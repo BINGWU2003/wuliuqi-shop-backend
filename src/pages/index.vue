@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { showToast } from 'vant'
-import { getUserInfo } from '@/api/user'
 // 游戏模块配置接口
 interface GameModule {
   id: string
@@ -14,24 +12,24 @@ interface GameModule {
     route?: string
   }[]
 }
-
+const router = useRouter()
 // 游戏列表配置
 const games = ref<GameModule[]>([
   {
     id: 'honor-of-kings',
-    name: '王者荣耀',
+    name: '使命召唤',
     icon: 'i-carbon-game-wireless',
     color: '#1890ff',
     modules: [
       {
         name: '邮箱管理',
         icon: 'i-carbon-email',
-        route: '/honor-of-kings/email',
+        route: '/codm-email',
       },
       {
         name: '账号管理',
         icon: 'i-carbon-user-multiple',
-        route: '/honor-of-kings/accounts',
+        route: '/codm-account',
       },
       {
         name: '筛选条件',
@@ -51,19 +49,11 @@ const games = ref<GameModule[]>([
 ])
 
 // 点击模块按钮
-function handleModuleClick(gameName: string, moduleName: string) {
-  showToast(`点击了 ${gameName} - ${moduleName}`)
-  // TODO: 后续实现路由跳转
-  // if (route) {
-  //   router.push(route)
-  // }
+function handleModuleClick(gameName: string, moduleName: string, moduleRoute: string) {
+  if (moduleRoute) {
+    router.push(moduleRoute)
+  }
 }
-
-onMounted(() => {
-  getUserInfo().then(() => {
-    showToast('获取用户信息成功')
-  })
-})
 </script>
 
 <template>
@@ -88,7 +78,7 @@ onMounted(() => {
             v-for="module in game.modules"
             :key="module.name"
             class="module-item"
-            @click="handleModuleClick(game.name, module.name)"
+            @click="handleModuleClick(game.name, module.name, module.route)"
           >
             <div class="module-icon-wrapper" :style="{ borderColor: game.color }">
               <div :class="module.icon" class="module-icon" :style="{ color: game.color }" />
@@ -101,7 +91,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="less">
 .dashboard-container {
   padding-bottom: 20px;
 }

@@ -21,7 +21,12 @@ declare module 'vue-router/auto-routes' {
     'Home': RouteRecordInfo<'Home', '/', Record<never, never>, Record<never, never>>,
     '404': RouteRecordInfo<'404', '/:all(.*)', { all: ParamValue<true> }, { all: ParamValue<false> }>,
     'Charts': RouteRecordInfo<'Charts', '/charts', Record<never, never>, Record<never, never>>,
+    'CodmAccount': RouteRecordInfo<'CodmAccount', '/codm-account', Record<never, never>, Record<never, never>>,
+    'CodmAccountOperation': RouteRecordInfo<'CodmAccountOperation', '/codm-account-operation', Record<never, never>, Record<never, never>>,
+    'CodmEmail': RouteRecordInfo<'CodmEmail', '/codm-email', Record<never, never>, Record<never, never>>,
+    'CodmEmailOperation': RouteRecordInfo<'CodmEmailOperation', '/codm-email-operation', Record<never, never>, Record<never, never>>,
     'Counter': RouteRecordInfo<'Counter', '/counter', Record<never, never>, Record<never, never>>,
+    'EmailSelect': RouteRecordInfo<'EmailSelect', '/email-select', Record<never, never>, Record<never, never>>,
     'ForgotPassword': RouteRecordInfo<'ForgotPassword', '/forgot-password', Record<never, never>, Record<never, never>>,
     'KeepAlive': RouteRecordInfo<'KeepAlive', '/keepalive', Record<never, never>, Record<never, never>>,
     'Login': RouteRecordInfo<'Login', '/login', Record<never, never>, Record<never, never>>,
@@ -58,8 +63,28 @@ declare module 'vue-router/auto-routes' {
       routes: 'Charts'
       views: never
     }
+    'src/pages/codm-account/index.vue': {
+      routes: 'CodmAccount'
+      views: never
+    }
+    'src/pages/codm-account-operation/index.vue': {
+      routes: 'CodmAccountOperation'
+      views: never
+    }
+    'src/pages/codm-email/index.vue': {
+      routes: 'CodmEmail'
+      views: never
+    }
+    'src/pages/codm-email-operation/index.vue': {
+      routes: 'CodmEmailOperation'
+      views: never
+    }
     'src/pages/counter/index.vue': {
       routes: 'Counter'
+      views: never
+    }
+    'src/pages/email-select/index.vue': {
+      routes: 'EmailSelect'
       views: never
     }
     'src/pages/forgot-password/index.vue': {

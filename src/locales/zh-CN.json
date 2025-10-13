@@ -19,7 +19,11 @@
     "Settings": "⚙️ 设置",
     "404": "⚠️ 404 页面",
     "Undefined": "🤷 未定义标题",
-    "TagManage": "标签管理"
+    "TagManage": "标签管理",
+    "CodmEmail": "CODM邮箱",
+    "CodmAccount": "CODM账号",
+    "CodmAccountOperation": "CODM账号操作",
+    "CodmEmailOperation": "CODM邮箱操作"
   },
 
   "tabbar": {
