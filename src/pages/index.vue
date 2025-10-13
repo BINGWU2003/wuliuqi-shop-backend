@@ -49,7 +49,7 @@ const games = ref<GameModule[]>([
 ])
 
 // 点击模块按钮
-function handleModuleClick(gameName: string, moduleName: string, moduleRoute: string) {
+function handleModuleClick(moduleRoute: string) {
   if (moduleRoute) {
     router.push(moduleRoute)
   }
@@ -78,7 +78,7 @@ function handleModuleClick(gameName: string, moduleName: string, moduleRoute: st
             v-for="module in game.modules"
             :key="module.name"
             class="module-item"
-            @click="handleModuleClick(game.name, module.name, module.route)"
+            @click="handleModuleClick(module.route)"
           >
             <div class="module-icon-wrapper" :style="{ borderColor: game.color }">
               <div :class="module.icon" class="module-icon" :style="{ color: game.color }" />
