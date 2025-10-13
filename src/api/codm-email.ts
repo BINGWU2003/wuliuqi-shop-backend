@@ -31,7 +31,7 @@ export function createCodmEmail(data: CreateCodmEmailData): Promise<any> {
 
 // 更新邮箱绑定状态
 export function updateBindStatus(id: number, data: UpdateBindStatusData): Promise<any> {
-  return request.patch(`/api/codm-emails/${id}/bind-status`, data)
+  return request.put(`/api/codm-emails/${id}/bind-status`, data)
 }
 
 // 删除邮箱

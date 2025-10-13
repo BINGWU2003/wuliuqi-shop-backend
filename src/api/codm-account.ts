@@ -51,5 +51,5 @@ export function deleteCodmAccount(id: number): Promise<any> {
 
 // 更新账号状态
 export function patchCodmAccount(id: number, data: { status: number }): Promise<any> {
-  return request.patch(`/api/codm-accounts/${id}/status`, data)
+  return request.put(`/api/codm-accounts/${id}/status`, data)
 }
