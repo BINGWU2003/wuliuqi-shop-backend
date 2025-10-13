@@ -164,9 +164,7 @@ async function handleSave() {
 
     await updateCarousel(CAROUSEL_NAME, { items })
     showToast('保存成功')
-    setTimeout(() => {
-      router.back()
-    }, 1000)
+    router.back()
   }
   catch (error) {
     console.error('保存失败:', error)

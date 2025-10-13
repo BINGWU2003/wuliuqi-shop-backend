@@ -119,6 +119,10 @@ export function createVitePlugins(mode: string) {
           },
         ],
       },
+      workbox: {
+        skipWaiting: true,
+        clientsClaim: true,
+      },
     }),
   ]
 }
