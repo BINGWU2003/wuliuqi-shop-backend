@@ -34,7 +34,6 @@ const limit = 20
 const searchValue = ref('')
 const activeCategory = ref(0)
 const router = useRouter()
-const scrollTop = ref(0)
 // 分类列表
 const categories = ['全部', '上架', '下架']
 
@@ -248,12 +247,6 @@ async function toggleAccountStatus() {
 onMounted(() => {
   onLoad()
 })
-onActivated(() => {
-  window.scrollTo(0, scrollTop.value)
-})
-onBeforeRouteLeave(() => {
-  scrollTop.value = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop
-})
 </script>
 
 <template>
@@ -370,9 +363,6 @@ onBeforeRouteLeave(() => {
 
 <route lang="json5">
 {
-  meta: {
-    keepAlive: true
-  },
   name: 'CodmAccount'
 }
 </route>

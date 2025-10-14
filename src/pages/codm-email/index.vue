@@ -20,7 +20,7 @@ const limit = 20
 const searchKeyword = ref('')
 const activeTab = ref(0)
 const router = useRouter()
-const scrollTop = ref(0)
+
 // ActionSheet 相关
 const showActionSheet = ref(false)
 const selectedEmail = ref<CodmEmail | null>(null)
@@ -171,15 +171,6 @@ async function deleteEmail(email: CodmEmail) {
 
 onMounted(() => {
   onLoad()
-})
-onActivated(() => {
-  window.scrollTo(0, scrollTop.value)
-})
-onBeforeRouteLeave(() => {
-  scrollTop.value
-    = window.scrollY
-      || document.documentElement.scrollTop
-      || document.body.scrollTop
 })
 </script>
 
@@ -364,9 +355,6 @@ onBeforeRouteLeave(() => {
 
 <route lang="json5">
 {
-  name: 'CodmEmail',
-  meta: {
-    keepAlive: true
-  },
+  name: 'CodmEmail'
 }
 </route>
