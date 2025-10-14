@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onActivated, onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { deleteCodmAccount, getCodmAccountList, patchCodmAccount } from '@/api/codm-account'
 import type { CodmAccount } from '@/api/codm-account'
 import { closeToast, showConfirmDialog, showLoadingToast, showToast } from 'vant'
