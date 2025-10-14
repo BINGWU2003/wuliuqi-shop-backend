@@ -165,7 +165,7 @@ async function deleteEmail(email: CodmEmail) {
   }
   catch (error: any) {
     closeToast()
-    showToast(error?.message || '删除失败')
+    console.error(error)
   }
 }
 

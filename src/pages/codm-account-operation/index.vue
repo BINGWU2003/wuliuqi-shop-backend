@@ -171,7 +171,7 @@ async function onSubmit() {
   }
   catch (error: any) {
     closeToast()
-    showToast(error?.message || '操作失败')
+    console.error(error)
   }
 }
 

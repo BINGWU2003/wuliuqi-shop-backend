@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { VueDraggable } from 'vue-draggable-plus'
-import { showLoadingToast, showToast } from 'vant'
+import { closeToast, showLoadingToast, showToast } from 'vant'
 import { COSUploadError, uploadFile } from '@/utils/upload-file'
 import { getCarousel, updateCarousel } from '@/api/carousel'
 import { useImagePreview } from '@/components/ImagePreview/useImagePreview'
@@ -127,6 +127,11 @@ function handleDeleteImage(index: number) {
 
 async function handleGetCarousel() {
   try {
+    showLoadingToast({
+      message: '加载中...',
+      forbidClick: true,
+      duration: 0,
+    })
     const res = await getCarousel(CAROUSEL_NAME)
     if (res?.data?.items && Array.isArray(res.data.items)) {
       images.value = res.data.items.sort((a: ImageItem, b: ImageItem) => a.sort_order - b.sort_order)
@@ -134,6 +139,9 @@ async function handleGetCarousel() {
   }
   catch (error) {
     console.error('获取轮播图失败:', error)
+  }
+  finally {
+    closeToast()
   }
 }
 

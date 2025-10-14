@@ -211,7 +211,7 @@ async function deleteAccount(account: CodmAccount) {
   }
   catch (error: any) {
     closeToast()
-    showToast(error?.message || '删除失败')
+    console.error(error)
   }
 }
 
@@ -241,7 +241,7 @@ async function toggleAccountStatus() {
   }
   catch (error: any) {
     closeToast()
-    showToast(error?.message || `${statusText}失败`)
+    console.error(error)
   }
 }
 
