@@ -43,7 +43,7 @@ const uploadingCount = ref(0)
 const editorRef = shallowRef<IDomEditor>()
 const editorHtml = ref(formData.value.describe || '')
 const toolbarConfig = {
-  toolbarKeys: ['numberedList', 'undo', 'redo'],
+  toolbarKeys: ['numberedList', 'undo', 'redo', 'fullScreen'],
 }
 const editorConfig = {
   placeholder: '请输入账号描述',
