@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { closeToast, showLoadingToast, showToast } from 'vant'
 import { createCodmAccount, getCodmAccountDetail, updateCodmAccount } from '@/api/codm-account'
 import { uploadFile } from '@/utils/upload-file'
 import { useAccountOperationStore, useEmailSelectStore } from '@/stores'
+import '@wangeditor/editor/dist/css/style.css'
+import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
+import type { IDomEditor } from '@wangeditor/editor'
 
 const route = useRoute()
 const router = useRouter()
@@ -35,6 +38,43 @@ const showStatusPicker = ref(false)
 // 图片上传相关
 const fileList = ref<any[]>([])
 const uploadingCount = ref(0)
+
+// 富文本编辑器
+const editorRef = shallowRef<IDomEditor>()
+const editorHtml = ref(formData.value.describe || '')
+const toolbarConfig = {
+  toolbarKeys: ['numberedList', 'undo', 'redo'],
+}
+const editorConfig = {
+  placeholder: '请输入账号描述',
+}
+
+function handleEditorCreated(editor: IDomEditor) {
+  editorRef.value = editor
+}
+
+watch(
+  () => formData.value.describe,
+  (value) => {
+    const normalized = value || ''
+    if (normalized !== editorHtml.value)
+      editorHtml.value = normalized
+  },
+)
+
+watch(
+  editorHtml,
+  (value) => {
+    if (value !== formData.value.describe)
+      formData.value.describe = value || ''
+  },
+)
+
+onBeforeUnmount(() => {
+  const editor = editorRef.value
+  if (editor)
+    editor.destroy()
+})
 
 // 选择状态
 function onStatusConfirm(value: { selectedOptions: any[] }) {
@@ -126,7 +166,11 @@ function validateForm() {
     showToast('请输入正确的价格')
     return false
   }
-  if (!formData.value.describe.trim()) {
+  const strippedDescribe = (formData.value.describe || '')
+    .replace(/<[^>]*>/g, '')
+    .replace(/&nbsp;/g, '')
+    .trim()
+  if (!strippedDescribe) {
     showToast('请输入描述')
     return false
   }
@@ -344,15 +388,29 @@ onMounted(async () => {
         <!-- 详细信息 -->
         <van-cell-group inset class="mt-16">
           <van-field
-            v-model="formData.describe"
-            rows="3"
-            autosize
-            type="textarea"
             name="describe"
             label="描述"
-            placeholder="请输入账号描述"
             required
-          />
+            class="rich-editor-field"
+          >
+            <template #input>
+              <div class="editor-wrapper">
+                <Toolbar
+                  class="editor-toolbar"
+                  :editor="editorRef"
+                  :default-config="toolbarConfig"
+                  mode="default"
+                />
+                <Editor
+                  v-model="editorHtml"
+                  class="editor-content"
+                  :default-config="editorConfig"
+                  mode="default"
+                  @on-created="handleEditorCreated"
+                />
+              </div>
+            </template>
+          </van-field>
 
           <van-field
             v-model="formData.xianyu_url"
@@ -400,6 +458,36 @@ onMounted(async () => {
     .submit-button {
       margin-top: 32px;
     }
+  }
+
+  .rich-editor-field {
+    :deep(.van-field__value) {
+      padding: 0;
+    }
+  }
+
+  .editor-wrapper {
+    width: 100%;
+    border: 1px solid #ebedf0;
+    border-radius: 8px;
+    background-color: #fff;
+    overflow: hidden;
+  }
+
+  .editor-toolbar {
+    border-bottom: 1px solid #ebedf0;
+  }
+
+  .editor-content {
+    min-height: 180px;
+  }
+
+  .editor-content :deep(.w-e-text-container) {
+    min-height: 180px;
+  }
+
+  .editor-content :deep(.w-e-text) {
+    padding: 12px;
   }
 
   :deep(.van-cell-group--inset) {
