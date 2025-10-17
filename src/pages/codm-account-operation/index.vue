@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { onBeforeRouteLeave, useRoute, useRouter } from 'vue-router'
 import { closeToast, showLoadingToast, showToast } from 'vant'
 import { createCodmAccount, getCodmAccountDetail, updateCodmAccount } from '@/api/codm-account'
 import { uploadFile } from '@/utils/upload-file'
@@ -41,9 +41,14 @@ const uploadingCount = ref(0)
 
 // 富文本编辑器
 const editorRef = shallowRef<IDomEditor>()
-const editorHtml = ref(formData.value.describe || '')
+const editorHtml = computed({
+  get: () => formData.value.describe || '',
+  set: (value: string) => {
+    formData.value.describe = value || ''
+  },
+})
 const toolbarConfig = {
-  toolbarKeys: ['numberedList', 'undo', 'redo', 'fullScreen'],
+  toolbarKeys: ['undo', 'numberedList', 'fullScreen'],
 }
 const editorConfig = {
   placeholder: '请输入账号描述',
@@ -51,24 +56,15 @@ const editorConfig = {
 
 function handleEditorCreated(editor: IDomEditor) {
   editorRef.value = editor
+  const initialHtml = formData.value.describe || ''
+  if (editor.getHtml() !== initialHtml)
+    editor.setHtml(initialHtml)
 }
 
-watch(
-  () => formData.value.describe,
-  (value) => {
-    const normalized = value || ''
-    if (normalized !== editorHtml.value)
-      editorHtml.value = normalized
-  },
-)
-
-watch(
-  editorHtml,
-  (value) => {
-    if (value !== formData.value.describe)
-      formData.value.describe = value || ''
-  },
-)
+onBeforeRouteLeave((to) => {
+  if (to.name !== 'EmailSelect')
+    accountOperationStore.resetFormData()
+})
 
 onBeforeUnmount(() => {
   const editor = editorRef.value
