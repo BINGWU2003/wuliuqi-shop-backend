@@ -15,18 +15,18 @@ const emailId = ref<number | null>(null)
 // 表单数据
 const formData = ref<CreateCodmEmailData>({
   prefix: '',
-  postfix: '@gmail.com',
+  postfix: '@163.com',
   bind_status: 2, // 默认未绑定
 })
 
 // 后缀选项列表
 const postfixOptions = [
+  { text: '@163.com', value: '@163.com' },
   { text: '@gmail.com', value: '@gmail.com' },
   { text: '@outlook.com', value: '@outlook.com' },
   { text: '@hotmail.com', value: '@hotmail.com' },
   { text: '@yahoo.com', value: '@yahoo.com' },
   { text: '@qq.com', value: '@qq.com' },
-  { text: '@163.com', value: '@163.com' },
   { text: '@126.com', value: '@126.com' },
 ]
 
@@ -35,7 +35,7 @@ const showPostfixPicker = ref(false)
 
 // 选择后缀
 function onPostfixConfirm(value: { selectedOptions: any[] }) {
-  formData.value.postfix = value.selectedOptions[0]?.value || '@gmail.com'
+  formData.value.postfix = value.selectedOptions[0]?.value || '@163.com'
   showPostfixPicker.value = false
 }
 
